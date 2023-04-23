@@ -29,7 +29,7 @@ public class Customer {
     private String address;
     @Basic
     @Column(name = "units")
-    private Double units;
+    private Double units = 0.0;
 
 
 

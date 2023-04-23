@@ -16,10 +16,15 @@ public class LoginController {
 
     private final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public Admin loginAdmin(@RequestBody Admin admin){
         LOGGER.info("Attempting Log-in: "+admin.getUsername()+" - "+admin.getPassword());
-        return repository.findByUsernameIgnoreCase(admin.getUsername());
+        Admin found = repository.findByUsernameIgnoreCase(admin.getUsername());
+        if(found == null)
+            return null;
+        else if(admin.getPassword().equals(found.getPassword()))
+            return found;
+        else return null;
     }
 
     @GetMapping("/")

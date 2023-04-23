@@ -29,7 +29,7 @@ public class CustomerController {
 
     @GetMapping("/customers/{id}")
     public Customer fetchCustomerById(@PathVariable("id") Long id){
-
+        LOGGER.info("Fetching customer with id "+id);
         return service.fetchCustomerById(id);
     }
 

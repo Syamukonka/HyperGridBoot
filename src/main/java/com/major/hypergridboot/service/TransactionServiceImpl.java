@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -39,11 +40,15 @@ public class TransactionServiceImpl implements TransactionService{
 
     @Override
     public List<Transaction> fetchAllTransactions() {
-        return repository.findAll();
+        List<Transaction> transactions = repository.findAll();
+        Collections.reverse(transactions);
+        return transactions;
     }
 
     @Override
     public List<Transaction> fetchAllTransactionsById(Long id) {
-        return repository.findTransactionByCustomerId(id);
+        List<Transaction> transactions =repository.findTransactionByCustomerId(id);
+        Collections.reverse(transactions);
+        return transactions;
     }
 }

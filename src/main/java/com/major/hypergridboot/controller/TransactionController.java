@@ -2,6 +2,8 @@ package com.major.hypergridboot.controller;
 
 import com.major.hypergridboot.entity.Transaction;
 import com.major.hypergridboot.service.TransactionService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,8 +16,10 @@ public class TransactionController {
     @Autowired
     TransactionService service;
 
+    private final Logger LOGGER = LoggerFactory.getLogger(TransactionController.class);
     @PostMapping("/transactions/pay")
     public Transaction payForId(@RequestBody Transaction transaction){
+        LOGGER.info("Processing Payment for "+transaction.getCustomerId());
         return service.savePayment(transaction);
     }
 
