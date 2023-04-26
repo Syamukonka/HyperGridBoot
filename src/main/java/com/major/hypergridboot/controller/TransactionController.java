@@ -1,6 +1,8 @@
 package com.major.hypergridboot.controller;
 
+import com.major.hypergridboot.entity.Stats;
 import com.major.hypergridboot.entity.Transaction;
+import com.major.hypergridboot.exception.CustomerNotFoundException;
 import com.major.hypergridboot.service.TransactionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +20,7 @@ public class TransactionController {
 
     private final Logger LOGGER = LoggerFactory.getLogger(TransactionController.class);
     @PostMapping("/transactions/pay")
-    public Transaction payForId(@RequestBody Transaction transaction){
+    public Transaction payForId(@RequestBody Transaction transaction) throws CustomerNotFoundException {
         LOGGER.info("Processing Payment for "+transaction.getCustomerId());
         return service.savePayment(transaction);
     }
@@ -27,9 +29,16 @@ public class TransactionController {
     public List<Transaction> fetchTransactions(){
         return service.fetchAllTransactions();
     }
+
     @GetMapping("/transactions/{id}")
     public List<Transaction> fetchTransactionsForId(@PathVariable("id") Long id ){
         return service.fetchAllTransactionsById(id);
+    }
+
+    @GetMapping("transactions/stats")
+    public List<Stats> getStats(){
+
+        return service.getStats();
     }
 
 }

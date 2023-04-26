@@ -1,6 +1,8 @@
 package com.major.hypergridboot.controller;
 
 import com.major.hypergridboot.entity.Customer;
+import com.major.hypergridboot.exception.CustomerNotFoundException;
+import com.major.hypergridboot.exception.InvalidCustomerDetailsException;
 import com.major.hypergridboot.repository.CustomerRepository;
 import com.major.hypergridboot.service.CustomerService;
 import com.major.hypergridboot.service.CustomerServiceImpl;
@@ -28,14 +30,19 @@ public class CustomerController {
     }
 
     @GetMapping("/customers/{id}")
-    public Customer fetchCustomerById(@PathVariable("id") Long id){
+    public Customer fetchCustomerById(@PathVariable("id") Long id) throws CustomerNotFoundException {
         LOGGER.info("Fetching customer with id "+id);
         return service.fetchCustomerById(id);
     }
 
     @PostMapping("/customers")
-    public Customer newCustomer(@RequestBody Customer customer){
+    public Customer newCustomer(@RequestBody Customer customer) throws InvalidCustomerDetailsException {
         return service.saveCustomer(customer);
+    }
+
+    @PutMapping("/customers/{id}")
+    public Customer updateCustomer(@RequestBody Customer customer){
+        return service.updateCustomer(customer);
     }
 
     @DeleteMapping("customers/{id}")
